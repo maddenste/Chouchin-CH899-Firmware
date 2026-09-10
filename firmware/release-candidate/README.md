@@ -8,8 +8,8 @@ The 9 September artifacts below pre-date the 10 September source-review fixes
 and are retained only as previous candidates. The dated v1.0.0 application
 export and 1 MiB image were captured on 11 September after flashing the current
 candidate, before saving any Wi-Fi settings. They are the paired recovery and
-release-candidate artifacts pending final hardware validation and source-tagged
-release packaging.
+release artifacts validated on the compatible movement; source tagging and
+public release packaging remain pending.
 
 Retained local artifacts:
 
@@ -26,6 +26,7 @@ The image-header flash-parameter byte differs (`0x90` in the Arduino export,
 1 MiB, DOUT, 40 MHz flash parameters. This is expected and is not a payload
 difference.
 
-Before publishing, confirm this exact candidate passes the hardware checklist,
-rebuild from the tagged source, regenerate this table, and attach the verified
-binaries and a `SHA256SUMS.txt` file to a GitHub Release.
+`SHA256SUMS.txt` in this directory is the verified checksum manifest for the two
+current release artifacts. Before publishing, rebuild from the tagged source,
+recheck the hashes, and attach the verified binaries and manifest to a GitHub
+Release.
