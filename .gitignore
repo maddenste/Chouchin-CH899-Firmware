@@ -1,0 +1,24 @@
+# Local/private research material: never publish these by accident.
+/private/
+# Raw firmware dumps can contain saved network credentials wherever copied.
+*.bin
+
+# Arduino's generated build directory and machine-specific metadata.
+/arduino/**/build/
+*.elf
+*.map
+compile_commands.json
+build.options.json
+libraries.cache
+includes.cache
+
+# Candidate and release binaries are distributed through GitHub Releases,
+# together with their checksums, not committed into the source repository.
+/firmware/release-candidate/*.bin
+/tools/*.bin
+
+# Empty or local scratch work.
+/scratch/
+
+# Locally generated source snapshots and manifests, never public source files.
+/release-preparation/
