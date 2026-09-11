@@ -20,7 +20,7 @@ The planned first release is documented in the [changelog](CHANGELOG.md).
 > **v1.0.0 candidate status.** The current source was compiled, flashed and
 > validated on the owner's compatible movement on 11 September 2026. A matching
 > application export and clean 1 MiB recovery image are retained locally with
-> SHA-256 values. A public GitHub release has not yet been created. See
+> SHA-256 values. See
 > [Testing status](docs/TESTING.md) and the [review record](docs/REVIEW-2026-09-10.md).
 
 ![Opened CH-899 movement](docs/images/01-open-movement-and-coils.jpg)
