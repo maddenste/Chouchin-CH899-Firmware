@@ -177,7 +177,7 @@ capture then showed ten acknowledgements and ten software restarts in about 19
 seconds: after every boot the MM32's next retry looked new. The revised source
 uses the stock-like two-command cadence as confirmation. Once configuration is
 blank, further `CLEAN` commands are acknowledged without another write or
-restart. This correction was subsequently validated on the v1.0.0 candidate.
+restart. This correction was subsequently validated in v1.0.0.
 
 ## 9. Deliberate choices for a releasable build
 
@@ -204,17 +204,17 @@ facts:
   read-only SWD route. They have not been used; bypassing read protection or
   using a method that erases the movement firmware is explicitly out of scope.
 
-## 11. Current release discipline
+## 11. Release discipline
 
-The source and documentation are ready for public release preparation. The
-v1.0.0 candidate was compiled, flashed and validated on the compatible clock,
-including a supported scheduled wake and Factory reset. Before a public binary
-is attached to a release, the remaining work is to create/tag the source,
-generate the release checksum manifest, and inspect the draft GitHub release.
+The source and documentation were prepared for the public v1.0.0 release. The
+source was compiled, flashed and validated on the compatible clock, including a
+supported scheduled wake and Factory reset. The GitHub release contains the
+application image, full 1 MiB factory image and checksum manifest.
 
 The retained 9 September binaries predate the subsequent source review. The
 v1.0.0 application export and paired clean 1 MiB recovery image supersede them
-for release preparation; their checksums are recorded locally.
+for release preparation; their checksums are published with the
+[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
 
 For the current evidence and test state, see
 [Hardware and reverse-engineering findings](REVERSE_ENGINEERING.md) and

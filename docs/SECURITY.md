@@ -26,7 +26,7 @@ It is not a guarantee that every historical flash byte has been securely erased.
 and serial captures must be treated as private. Public photos are sanitised
 copies, not the location-bearing originals.
 
-The v1.0.0 candidate was checked through the phone captive portal, AP address
+The v1.0.0 release was checked through the phone captive portal, AP address
 and LAN address. No OTA endpoint is included: MM32-controlled reset/wake
 windows make uninterrupted updates an unvalidated assumption.
 

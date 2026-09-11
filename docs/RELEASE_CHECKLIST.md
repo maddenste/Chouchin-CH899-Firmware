@@ -1,8 +1,8 @@
-# v1.0.0 release checklist
+# v1.0.0 release checklist (completed)
 
 The v1.0.0 source has been compiled, flashed and hardware-validated on the
-owner's compatible movement. The remaining work is source control and public
-release administration.
+owner's compatible movement. The source, release assets and checksum manifest
+were published on 11 September 2026.
 
 ## Offline
 
@@ -32,7 +32,7 @@ release administration.
       (`09:00`, `10:00`, `21:00`, or `22:00`).
 - [x] Recovery from the owner's backup is understood and verified.
 
-## Before publishing
+## Publication record
 
 - [x] Choose GPL-3.0-or-later and original-project attribution terms.
 - [x] Document the trusted-local-network configuration-access policy in [Security](SECURITY.md).
@@ -40,7 +40,7 @@ release administration.
 - [x] Exclude vendor binaries, credentials, captures and private research assets.
 - [x] Separate old candidate binaries from the v1.0.0 application and factory images.
 - [x] Document tested hardware, source revision, settings and limitations.
-- [ ] Create the initial Git commit and inspect the staged file list.
-- [ ] Generate `SHA256SUMS.txt`, then inspect the release title, tag, assets and checksums before publication.
+- [x] Create the initial Git commit and inspect the staged file list.
+- [x] Generate `SHA256SUMS.txt`, inspect the release title, tag, assets and checksums, and publish v1.0.0.
 
 The source ZIP generator is a packaging aid. It does not publish a release.

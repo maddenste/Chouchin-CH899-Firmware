@@ -12,7 +12,7 @@ $files = @(& git -C $root -c core.quotepath=false ls-files --cached --others --e
 if ($LASTEXITCODE -ne 0 -or $files.Count -eq 0) { throw 'Could not enumerate the public source files.' }
 $files = @($files | Sort-Object -Unique)
 $allowedRootFiles = @('README.md', 'CHANGELOG.md', '.gitignore', '.gitattributes', 'LICENSE', 'LICENSE.md', 'NOTICE', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md')
-$allowedExtensions = @('.md', '.ino', '.h', '.html', '.ps1', '.cjs', '.py', '.svg', '.jpg', '.jpeg', '.png')
+$allowedExtensions = @('.md', '.txt', '.ino', '.h', '.html', '.ps1', '.cjs', '.py', '.svg', '.jpg', '.jpeg', '.png')
 foreach ($relative in $files) {
     $relative = $relative.Replace('\', '/')
     if ($relative -match '(^|/)(private|build|scratch|release-preparation|\.git)(/|$)' -or
@@ -21,7 +21,7 @@ foreach ($relative in $files) {
     }
     $isRoot = $relative.IndexOf('/') -lt 0
     if (($isRoot -and $relative -notin $allowedRootFiles) -or
-        (-not $isRoot -and $relative -notmatch '^(arduino/CH899_Clock/|docs/|tools/|firmware/release-candidate/README\.md$)')) {
+        (-not $isRoot -and $relative -notmatch '^(arduino/CH899_Clock/|docs/|tools/|firmware/release-candidate/(README\.md|SHA256SUMS\.txt)$)')) {
         throw "Unapproved source path: $relative"
     }
     $extension = [IO.Path]::GetExtension($relative).ToLowerInvariant()
@@ -85,7 +85,7 @@ try {
 }
 finally { $verifyArchive.Dispose(); $verifyStream.Dispose() }
 $manifest = [ordered]@{
-    status = 'Source-review snapshot; not a compiled or hardware-validated firmware release'
+    status = 'Local source snapshot; release binaries and checksums are published separately'
     createdUtc = [DateTime]::UtcNow.ToString('o')
     archive = [IO.Path]::GetFileName($zipPath)
     archiveSha256 = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -97,4 +97,4 @@ Write-Host "Verified $($entries.Count) source/archive entries."
 Write-Host "Source snapshot: $zipPath"
 Write-Host "Manifest: $manifestPath"
 Write-Host 'No firmware binaries, private evidence, Git metadata, builds or credentials are intentionally included.'
-Write-Host 'This is a local review snapshot. Licence, compilation and hardware release checks remain pending.'
+Write-Host 'This is a local source snapshot, not a replacement for the published release assets or checksum manifest.'

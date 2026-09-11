@@ -26,7 +26,7 @@ hardware and firmware images you are authorised to inspect.
   compile firmware, open serial ports or contact the clock.
 - `prepare_source_release.ps1` produces a source-only ZIP in ignored
   `release-preparation/`, rereads every archive entry and verifies its SHA-256.
-  It excludes candidate binaries and private material. Run the check first.
+  It excludes release binaries and private material. Run the check first.
 
 ```powershell
 powershell -NoProfile -File .\tools\check_release.ps1

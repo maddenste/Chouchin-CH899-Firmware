@@ -76,7 +76,7 @@ therefore cannot be guaranteed by the ESP firmware alone.
   returns `CLEAN_OK`, disconnects and software-restarts only after the repeat.
   Replacement source now uses the same two-command confirmation and treats an
   already blank configuration as acknowledged without another erase/restart.
-  This behaviour was validated on the v1.0.0 candidate.
+  This behaviour was validated in v1.0.0.
 - The MM32 SWD pad group is labelled `GND VDD DIO CLK RESET`. It is a promising
   read-only debug route, but the MM32 has not been read or modified.
 

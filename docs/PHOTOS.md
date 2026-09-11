@@ -16,4 +16,4 @@ tree. The public copies were checked to contain no GPS EXIF property IDs.
 | [08](images/08-mm32-swd-header.jpg) | MM32 SWD-style pad group. |
 | [09](images/09-nodemcu-usb-uart-pinout.jpg) | NodeMCU labels used during UART work. |
 | [10](images/10-esp-flashing-harness.jpg) | Historical harness during troubleshooting, before the RX/TX correction. Use [FLASHING.md](FLASHING.md) for final wiring. |
-| [11](images/11-wifi-clock-setup-page-v1.png) | WiFi-Clock Setup page showing the v1.0.0 candidate on the connected LAN. |
+| [11](images/11-wifi-clock-setup-page-v1.png) | WiFi-Clock Setup page showing v1.0.0 on the connected LAN. |

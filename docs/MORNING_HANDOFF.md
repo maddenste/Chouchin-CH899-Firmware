@@ -1,10 +1,11 @@
-# Release handoff — 11 September 2026
+# Release handoff — 11 September 2026 (completed)
 
 ## What is ready
 
 The editable source, embedded setup page, research notes and photographs are
-organised for release. The v1.0.0 candidate has been compiled, flashed and
-validated on the owner's compatible movement; it is not yet published.
+organised for release. The v1.0.0 source was compiled, flashed and validated
+on the owner's compatible movement, then published with its binaries and
+checksum manifest.
 
 Further source changes after the initial review include:
 
@@ -33,7 +34,7 @@ software-restarts. A first replacement test exposed a reboot loop because each
 fresh boot treated the next repeat as a new reset. Source now requires a second
 `CLEAN` at the observed cadence and, once configuration is blank, acknowledges
 later repeats without another erase or restart. This behaviour was validated on
-the v1.0.0 candidate.
+the v1.0.0 release.
 
 Subsequent stock tests showed that its ESP accepts and transmits arbitrary
 AutoAdjust strings, but the MM32 does not reliably honour them. A known
@@ -46,8 +47,8 @@ schedule is normalised to `10:00` when loaded.
 The source was compiled and flashed with the documented ESP8285 settings. The
 owner completed the hardware validation path, including provisioning, NTP and
 fallback, UART timing, reset behaviour and a supported scheduled wake. The
-paired v1.0.0 application export and clean 1 MiB image are recorded in
-`firmware/release-candidate/README.md`.
+paired v1.0.0 application export and clean 1 MiB image are recorded in the
+[release artifact record](../firmware/release-candidate/README.md).
 
 Browser simulation tests exercise the real page script, but cannot prove ESP
 timing or MM32 behaviour.
@@ -56,21 +57,21 @@ All 28 page checks passed, as did the offline public-file, PowerShell syntax
 and local Markdown file-link checks. All 40 timezone presets also passed the
 IANA tzdata 2026.3 verification through 2035. The stricter stock extractor successfully
 read the owner's 1 MiB image into a new ignored private directory (7,853 bytes
-from 64 pages). Existing candidate binary hashes remain unchanged.
+from 64 pages). Existing historical binary hashes remain unchanged.
 
 The publication check caught an original raw dump at the repository root.
 It was preserved, not deleted; a global `*.bin` ignore now protects accidental
-raw-dump inclusion. A final staged-file and privacy review is still required
-immediately before GitHub publication.
+raw-dump inclusion. The final staged-file and privacy review was completed
+before GitHub publication.
 
-## Next session
+## Post-release work
 
-1. Create the initial local Git commit and inspect the staged source set.
-2. Generate a release `SHA256SUMS.txt` from the paired v1.0.0 binaries.
-3. Create/push the GitHub repository and inspect the draft release before
-   publishing it.
+Future changes should be developed and released as a new version. Do not alter
+the published v1.0.0 application or factory image without a new source commit,
+fresh checksum manifest and hardware validation.
 
 The ignored `release-preparation/` directory holds any locally generated
 source-only ZIP and its per-file SHA-256 manifest. These snapshots deliberately
-exclude original firmware, private captures, build outputs and candidate bins.
-GPL-3.0-or-later has been selected; no public release has been created.
+exclude original firmware, private captures, build outputs and release bins.
+GPL-3.0-or-later is selected. v1.0.0 is published at the
+[GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).

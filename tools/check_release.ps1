@@ -37,4 +37,4 @@ try {
 } finally { Pop-Location }
 Write-Host "PASS: $($files.Count) public files checked; PowerShell syntax and local Markdown file links checked."
 Write-Host 'This does not certify absence of secrets or validate image metadata.'
-Write-Host 'Before publication, inspect the staged source set and draft release assets, including their SHA-256 values.'
+Write-Host 'Before a future release, inspect the staged source set and draft release assets, including their SHA-256 values.'

@@ -15,12 +15,13 @@ The original project source is licensed under
 redistribution provided the corresponding source and GPL terms are supplied.
 Released firmware also contains components from the ESP8266 Arduino Core 3.1.2,
 which retain their own terms. See [Third-party notices](THIRD_PARTY_NOTICES.md).
-The planned first release is documented in the [changelog](CHANGELOG.md).
+The current public release is documented in the [changelog](CHANGELOG.md).
 
-> **v1.0.0 candidate status.** The current source was compiled, flashed and
-> validated on the owner's compatible movement on 11 September 2026. A matching
-> application export and clean 1 MiB recovery image are retained locally with
-> SHA-256 values. See
+> **v1.0.0 released 11 September 2026.** The source was compiled, flashed and
+> validated on the owner's compatible movement. Download the application image,
+> full 1 MiB factory image and checksum manifest from the
+> [v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+> See
 > [Testing status](docs/TESTING.md) and the [review record](docs/REVIEW-2026-09-10.md).
 
 ![Opened CH-899 movement](docs/images/01-open-movement-and-coils.jpg)
@@ -81,12 +82,11 @@ The replacement provides:
 2. Follow [Flashing a clock](docs/FLASHING.md) exactly.
 3. Read the [setup-page guide](docs/USER_GUIDE.md), or the
    [Arduino guide](arduino/CH899_Clock/README.md) to edit or build the source.
-4. See [Testing status](docs/TESTING.md) for what is confirmed and what remains
-   under test.
-5. Read the [10 September review](docs/REVIEW-2026-09-10.md) for source fixes,
-   validation and remaining limitations.
-6. Start the next session with the [current handoff](docs/MORNING_HANDOFF.md)
-   and [release checklist](docs/RELEASE_CHECKLIST.md).
+4. See [Testing status](docs/TESTING.md) for the v1.0.0 validation record.
+5. Read the [10 September review](docs/REVIEW-2026-09-10.md) for source fixes
+   and their evidence.
+6. Use the [release checklist](docs/RELEASE_CHECKLIST.md) as the record of the
+   v1.0.0 release process.
 
 ## Repository layout
 
@@ -94,18 +94,18 @@ The replacement provides:
 - `docs/` — journey, flashing guide, findings, testing record and labelled
   photographs.
 - `tools/` — PowerShell research helpers and dependency-free page tests.
-- `firmware/release-candidate/` — local candidate binaries; intentionally not
-  committed. Formal downloads will be attached to GitHub Releases.
+- `firmware/release-candidate/` — release-artifact record and SHA-256 manifest;
+  firmware downloads are attached to GitHub Releases.
 - `private/` — excluded from Git; contains personal UART captures, original
   vendor firmware and historical experiments.
 
-## Before the first public release
+## Downloads and verification
 
-- Create the initial Git commit and inspect the exact staged file list.
-- Generate `SHA256SUMS.txt` from the retained v1.0.0 application and factory
-  images.
-- Create the GitHub repository, push the source, and inspect the release title,
-  tag, assets and checksums before publishing.
+Download only from the
+[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+It contains the application image, full 1 MiB factory image and
+`SHA256SUMS.txt`. Verify downloaded images against that manifest before
+flashing.
 
 No original vendor ESP firmware, raw UART captures, or extracted stock web
 assets are included in the public project.

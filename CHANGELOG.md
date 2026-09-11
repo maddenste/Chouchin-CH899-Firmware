@@ -3,14 +3,15 @@
 All notable changes to this project are documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-Dates and release assets are added only when a version is actually published.
+Dates and release assets are added when a version is published.
 
-## [1.0.0] — planned first public release
+## [1.0.0] — 2026-09-11
 
 This is the first independently developed replacement ESP8285 firmware for
-compatible CH-899 / CHOUCHIN Wi-Fi clock movements. It remains a release
-candidate until the exact final source is compiled and passes the documented
-hardware checks.
+compatible CH-899 / CHOUCHIN Wi-Fi clock movements. It was compiled, flashed
+and validated on the owner's compatible movement. The application image, full
+1 MiB factory image and `SHA256SUMS.txt` are available from the
+[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
 
 ### Added
 
@@ -48,5 +49,5 @@ hardware checks.
   modified or distributed by this project.
 
 See [Testing status](docs/TESTING.md) and the
-[release checklist](docs/RELEASE_CHECKLIST.md) before treating this version as
-a hardware-validated public release.
+[release checklist](docs/RELEASE_CHECKLIST.md) for the validation and release
+record.

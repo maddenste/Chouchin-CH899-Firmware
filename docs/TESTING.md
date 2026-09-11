@@ -1,11 +1,10 @@
 # Testing status
 
-**v1.0.0 candidate, 11 September 2026:** the reviewed source was compiled,
+**v1.0.0 release, 11 September 2026:** the reviewed source was compiled,
 flashed and validated on the owner's compatible CH-899 / CHOUCHIN movement.
-The matching application export and clean 1 MiB recovery image are retained
-locally with their SHA-256 values in
-[the candidate-artifact record](../firmware/release-candidate/README.md). A
-public GitHub release has not yet been created.
+The matching application export and clean 1 MiB recovery image, with their
+SHA-256 values, are published on the
+[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
 
 | Test | Status | Notes |
 | --- | --- | --- |
@@ -52,6 +51,5 @@ but does not replace, the completed v1.0.0 hardware validation.
 
 ## Publication status
 
-The remaining work is Git source control and GitHub release assembly. Recheck
-the exact application and factory-image hashes against the tagged source before
-attaching public binaries.
+The v1.0.0 source, binaries and checksum manifest are published. The release
+assets were downloaded after publication and verified against `SHA256SUMS.txt`.

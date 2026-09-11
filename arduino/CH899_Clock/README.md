@@ -6,7 +6,7 @@ It is a single application image: the setup page is compiled into flash from
 
 ## Arduino IDE settings
 
-The retained candidate was built with **ESP8266 by ESP8266 Community 3.1.2**.
+The v1.0.0 release was built with **ESP8266 by ESP8266 Community 3.1.2**.
 Install that version in Boards Manager to reproduce the build environment,
 then use:
 
@@ -45,7 +45,7 @@ overrides to the verified **1MB** size when writing.
 4. Locate the newly exported `CH899_Clock.ino.bin` (depending on IDE version,
    under the sketch or `build/esp8266.esp8266.esp8285/`). Record its SHA-256 and
    source revision; use that exact file in the flashing command or deliberately
-   copy it to the candidate filename after preserving the previous candidate.
+   copy it to a versioned release filename after preserving the previous image.
 5. Follow the project [flashing guide](../../docs/FLASHING.md).
 
 `web_ui.h` is generated and must stay alongside the sketch. Do not edit it
@@ -54,10 +54,11 @@ directly.
 Keep `clock_validation.h` and `clock_session.h` alongside the sketch too; they
 implement input validation and page-session ownership.
 
-The binaries currently in `firmware/release-candidate/` were exported on
-9 September 2026, before the subsequent source review. Documentation or source
-changes do not rebuild them. A fresh export and hardware retest are required
-before publishing reviewed source and matching release binaries.
+The v1.0.0 release binaries were exported on 11 September 2026 after the
+reviewed source was compiled and validated. They are available from the
+[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+Documentation or source changes do not rebuild those binaries; a modified build
+needs a fresh export, checksum and hardware test before distribution.
 
 ## Current behaviour
 
@@ -86,7 +87,7 @@ before publishing reviewed source and matching release binaries.
   is the fallback when a phone disappears or the browser does not deliver the
   request. Closing a browser cannot guarantee immediate delivery to the clock.
 - The setup page refreshes connection status every two seconds.
-- Save & update clock commits the candidate settings and schedules a restart in
+- Save & update clock commits the new settings and schedules a restart in
   the same HTTP request. The browser stops polling when the request succeeds;
   after reboot, the firmware connects, requests NTP and resumes normal time
   announcements. A failed commit leaves the running settings unchanged.
