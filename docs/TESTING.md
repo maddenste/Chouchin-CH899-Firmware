@@ -1,9 +1,9 @@
 # Testing status
 
-**v1.0.0 release, 11 September 2026:** the reviewed source was compiled,
-flashed and validated on the owner's compatible CH-899 / CHOUCHIN movement.
-The matching application export and its SHA-256 value are published on the
-[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+**Initial v1.0.0 validation, 11 September 2026:** the reviewed source was
+compiled, flashed and validated on the owner's compatible CH-899 / CHOUCHIN
+movement. It was subsequently superseded by v1.0.1; the source revision is
+retained as Git tag `v1.0.0`.
 
 **v1.0.1 acceptance, 12 September 2026:** final compatible-movement testing
 completed successfully. This version adds the station-only wake policy and the
@@ -54,7 +54,7 @@ the ESP or future government policy changes.
 
 The installed ESP8266 Arduino core 3.1.2 source was inspected to confirm NTP
 hostname ownership, scan behaviour and flash-map semantics. This complements,
-but does not replace, the completed v1.0.0 hardware validation.
+but does not replace, the completed initial hardware validation.
 
 ### v1.0.1 review and hardware acceptance, 12 September 2026
 
@@ -69,5 +69,7 @@ Final compatible-movement testing subsequently completed successfully.
 
 ## Publication status
 
-The v1.0.0 source, binaries and checksum manifest are published. The release
-assets were downloaded after publication and verified against `SHA256SUMS.txt`.
+Version 1.0.1 is the sole downloadable GitHub Release. Its application image,
+user manual and checksum manifest were downloaded after publication and
+verified against `SHA256SUMS.txt`. The superseded v1.0.0 source revision remains
+available as a Git tag, without a separate Release or downloadable binaries.

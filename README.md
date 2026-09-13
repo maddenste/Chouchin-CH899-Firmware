@@ -88,8 +88,8 @@ The replacement provides:
 2. Follow [Flashing a clock](docs/FLASHING.md) exactly.
 3. Read the [setup-page guide](docs/USER_GUIDE.md), or the
    [Arduino guide](arduino/CH899_Clock/README.md) to edit or build the source.
-4. See [Testing status](docs/TESTING.md) for the published v1.0.0 validation
-   record and the v1.0.1 hardware-acceptance boundary.
+4. See [Testing status](docs/TESTING.md) for the initial validation record and
+   the v1.0.1 hardware-acceptance results.
 5. Read the [10 September review](docs/REVIEW-2026-09-10.md) for source fixes
    and their evidence.
 

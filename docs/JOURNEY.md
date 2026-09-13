@@ -206,16 +206,15 @@ facts:
 
 ## 11. Release discipline
 
-The source and documentation were prepared for the public v1.0.0 release. The
-source was compiled, flashed and validated on the compatible clock, including a
-supported scheduled wake and Factory reset. The GitHub release contains the
-application image and checksum manifest. A clean installation erases the ESP
-before writing that application image.
+The source and documentation were prepared for the initial v1.0.0 publication.
+The source was compiled, flashed and validated on the compatible clock,
+including a supported scheduled wake and Factory reset. A clean installation
+erases the ESP before writing the application image.
 
 The retained 9 September binaries predate the subsequent source review. The
-v1.0.0 application export supersedes them for release preparation; its checksum
-is published with the
-[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+initial v1.0.0 build superseded them and was itself superseded by v1.0.1. Its
+source revision remains available through Git tag `v1.0.0`; v1.0.1 is the sole
+downloadable GitHub Release.
 
 For the current evidence and test state, see
 [Hardware and reverse-engineering findings](REVERSE_ENGINEERING.md) and

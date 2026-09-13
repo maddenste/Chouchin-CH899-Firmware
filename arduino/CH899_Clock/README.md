@@ -6,8 +6,7 @@ It is a single application image: the setup page is compiled into flash from
 
 ## Arduino IDE settings
 
-The v1.0.0 release and prepared v1.0.1 build use **ESP8266 by ESP8266
-Community 3.1.2**.
+The v1.0.1 release uses **ESP8266 by ESP8266 Community 3.1.2**.
 Install that version in Boards Manager to reproduce the build environment,
 then use:
 
@@ -55,15 +54,12 @@ directly.
 Keep `clock_validation.h` and `clock_session.h` alongside the sketch too; they
 implement input validation and page-session ownership.
 
-The v1.0.0 release binaries were exported on 11 September 2026 after the
-reviewed source was compiled and validated. They are available from the
-[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
-Documentation or source changes do not rebuild those binaries; a modified build
-needs a fresh export, checksum and hardware test before distribution.
-
 The source identifies itself as `v1.0.1`. Final compatible-movement testing
-completed on 12 September 2026; the prepared application image becomes public
-only when the GitHub Release is created.
+completed on 12 September 2026, and the matching application image is published
+on the
+[v1.0.1 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1).
+Documentation or source changes do not rebuild that binary; a modified build
+needs a fresh export, checksum and hardware test before distribution.
 
 ## Current behaviour
 

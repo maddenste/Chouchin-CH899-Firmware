@@ -28,9 +28,8 @@ matching application image, user manual and SHA-256 manifest were published on
 
 This is the first independently developed replacement ESP8285 firmware for
 compatible CH-899 / CHOUCHIN Wi-Fi clock movements. It was compiled, flashed
-and validated on the owner's compatible movement. The application image and
-`SHA256SUMS.txt` remain available from the
-[v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+and validated on the owner's compatible movement. It has been superseded by
+v1.0.1; its source history remains available through Git tag `v1.0.0`.
 
 ### Added
 

@@ -32,8 +32,8 @@ It is not a guarantee that every historical flash byte has been securely erased.
 and serial captures must be treated as private. Public photos are sanitised
 copies, not the location-bearing originals.
 
-The v1.0.0 release was checked through the phone captive portal, AP address
-and LAN address. No OTA endpoint is included: MM32-controlled reset/wake
-windows make uninterrupted updates an unvalidated assumption.
+The initial v1.0.0 build was checked through the phone captive portal, AP
+address and LAN address. No OTA endpoint is included: MM32-controlled
+reset/wake windows make uninterrupted updates an unvalidated assumption.
 
 Reference: [OWASP CSRF prevention guidance](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
