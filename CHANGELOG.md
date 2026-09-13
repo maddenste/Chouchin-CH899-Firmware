@@ -5,12 +5,31 @@ All notable changes to this project are documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Dates and release assets are added when a version is published.
 
+## [1.0.1] — 2026-09-12
+
+- Setup AP renamed to `wifi-clock-setup-<chip-id>`.
+- With valid saved Wi-Fi settings, normal and scheduled wakes are station-only:
+  the AP and captive DNS do not start, and mDNS begins only after station
+  connection.
+- A saved network gets a single ten-second connection attempt. If it fails,
+  Wi-Fi stops for that wake with no automatic retry or fallback AP. Factory
+  reset returns the firmware to its blank-settings setup-AP path.
+- Network shutdown cancels queued scans, discards late scan results without
+  restarting Wi-Fi, and stops the page's `+TICK` session. Buffered scan and
+  keepalive requests are rejected while offline.
+
+Final compatible-movement acceptance completed on 12 September 2026. The
+matching application image, user manual and SHA-256 manifest were published on
+13 September 2026.
+
+## Unreleased
+
 ## [1.0.0] — 2026-09-11
 
 This is the first independently developed replacement ESP8285 firmware for
 compatible CH-899 / CHOUCHIN Wi-Fi clock movements. It was compiled, flashed
-and validated on the owner's compatible movement. The application image, full
-1 MiB factory image and `SHA256SUMS.txt` are available from the
+and validated on the owner's compatible movement. The application image and
+`SHA256SUMS.txt` remain available from the
 [v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
 
 ### Added
@@ -48,6 +67,4 @@ and validated on the owner's compatible movement. The application image, full
 - Only the ESP firmware is replaced. The MM32 movement firmware is not
   modified or distributed by this project.
 
-See [Testing status](docs/TESTING.md) and the
-[release checklist](docs/RELEASE_CHECKLIST.md) for the validation and release
-record.
+See [Testing status](docs/TESTING.md) for the validation record.

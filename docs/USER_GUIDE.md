@@ -1,13 +1,27 @@
 # Clock setup
 
-Wake the clock using M.SET and connect your phone to `WiFi-Clock Setup-<id>`.
-If the setup page does not appear automatically, open `http://192.168.4.1/`.
-The phone may warn that this network has no internet: that is expected.
-Once the clock is connected to your LAN, `http://wifi-clock-<chip-id>.local/`
-provides a unique friendlier address while the ESP remains awake. The exact
-address is shown on the setup page after it connects. mDNS support depends on
-the phone or computer and local network; use the clock's IP address if it does
-not resolve.
+## First-time setup or Factory-reset recovery
+
+With blank or invalid saved settings, wake the clock and connect your phone to
+`wifi-clock-setup-<chip-id>`. If the setup page does not appear automatically,
+open `http://192.168.4.1/`. The phone may warn that this network has no
+internet: that is expected.
+
+After saved settings have connected to your LAN,
+`http://wifi-clock-<chip-id>.local/` provides a friendlier address while the
+ESP remains awake. The exact address is shown on the setup page after it
+connects. mDNS support depends on the phone or computer and local network; use
+the clock's IP address if it does not resolve.
+
+Once Wi-Fi settings have been saved, normal and scheduled wakes do **not**
+broadcast the setup AP. The clock tries its saved network for ten seconds and
+then stops Wi-Fi for that wake if it cannot connect. If the router, SSID or
+password changes, use **Factory reset** from the page while it is reachable, or
+hold **M.SET + REC** to invoke the movement's physical reset path; blank
+replacement settings cause the setup AP to return on the next ESP start.
+
+If Wi-Fi disconnects after connecting, networking also stops for that wake,
+without retrying. Any setup-page keepalive session stops at the same time.
 
 Choose a 2.4 GHz Wi-Fi network from the automatically scanned list, or use the
 last option to enter its name manually. **Re-scan networks** refreshes the list.
@@ -45,7 +59,7 @@ dashboard.
 
 **Factory reset** asks for confirmation, clears this firmware's saved settings
 and restarts the ESP. It does not reinstall vendor firmware or erase the MM32.
-The AP is open: see [security boundaries](SECURITY.md).
+The setup AP is open: see [security boundaries](SECURITY.md).
 
 The bottom of the setup page displays the installed firmware version. The same
 value is available to local tools at `/api/v1/status` as `firmwareVersion`.

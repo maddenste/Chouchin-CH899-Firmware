@@ -12,7 +12,7 @@ $files = @(& git -C $root -c core.quotepath=false ls-files --cached --others --e
 if ($LASTEXITCODE -ne 0 -or $files.Count -eq 0) { throw 'Could not enumerate the public source files.' }
 $files = @($files | Sort-Object -Unique)
 $allowedRootFiles = @('README.md', 'CHANGELOG.md', '.gitignore', '.gitattributes', 'LICENSE', 'LICENSE.md', 'NOTICE', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md')
-$allowedExtensions = @('.md', '.txt', '.ino', '.h', '.html', '.ps1', '.cjs', '.py', '.svg', '.jpg', '.jpeg', '.png')
+$allowedExtensions = @('.md', '.txt', '.ino', '.h', '.html', '.ps1', '.cjs', '.py', '.svg', '.jpg', '.jpeg', '.png', '.pdf')
 foreach ($relative in $files) {
     $relative = $relative.Replace('\', '/')
     if ($relative -match '(^|/)(private|build|scratch|release-preparation|\.git)(/|$)' -or
@@ -21,14 +21,17 @@ foreach ($relative in $files) {
     }
     $isRoot = $relative.IndexOf('/') -lt 0
     if (($isRoot -and $relative -notin $allowedRootFiles) -or
-        (-not $isRoot -and $relative -notmatch '^(arduino/CH899_Clock/|docs/|tools/|firmware/release-candidate/(README\.md|SHA256SUMS\.txt)$)')) {
+        (-not $isRoot -and $relative -notmatch '^(arduino/CH899_Clock/|docs/|tools/)')) {
         throw "Unapproved source path: $relative"
     }
     $extension = [IO.Path]::GetExtension($relative).ToLowerInvariant()
     if (-not $isRoot -and $extension -notin $allowedExtensions -and $relative -ne 'arduino/CH899_Clock/.gitignore') {
         throw "Unapproved source file type: $relative"
     }
-    $item = Get-Item -LiteralPath (Join-Path $root $relative)
+    # .gitattributes may be marked Hidden on Windows after repository setup.
+    # Include it in the public source set rather than treating that attribute
+    # as if the tracked file were missing.
+    $item = Get-Item -LiteralPath (Join-Path $root $relative) -Force
     if ($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) {
         throw "Unexpected directory or link: $relative"
     }

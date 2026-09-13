@@ -34,8 +34,9 @@ FLASH_MAP_SETUP_CONFIG(FLASH_MAP_NO_FS)
 
 namespace {
 constexpr uint32_t MM32_BAUD = 115200;
-constexpr uint32_t WIFI_CONNECT_TIMEOUT_MS = 20000;
-constexpr uint32_t PORTAL_TIMEOUT_MS = 10UL * 60UL * 1000UL;
+// A normal MM32-scheduled wake is short.  Give a saved network enough time to
+// obtain DHCP, but do not spend the entire wake retrying or exposing an AP.
+constexpr uint32_t WIFI_CONNECT_TIMEOUT_MS = 10000;
 constexpr uint32_t NTP_TIMEOUT_MS = 8000;
 constexpr uint32_t DAILY_SYNC_MS = 24UL * 60UL * 60UL * 1000UL;
 constexpr uint32_t TIME_ANNOUNCE_INTERVAL_MS = 1000;
@@ -46,13 +47,12 @@ constexpr uint32_t CLEAN_CONFIRM_MIN_MS = 1000;
 constexpr uint32_t CLEAN_CONFIRM_MAX_MS = 4000;
 constexpr uint32_t FACTORY_WIFI_CLEAR_DELAY_MS = 50;
 constexpr uint32_t RESTART_DELAY_MS = 250;
-constexpr bool KEEP_AWAKE = false;
 // In the observed stock M.SET session, the ESP repeats the time record once
 // per second after NTP succeeds. The MM32 ends the wake session; this firmware
 // never drives a sleep pin.
 constexpr bool AUTO_SEND_TIME_TO_MM32 = true;
-constexpr char FIRMWARE_VERSION[] = "v1.0.0";
-constexpr char AP_PREFIX[] = "WiFi-Clock Setup-";
+constexpr char FIRMWARE_VERSION[] = "v1.0.1";
+constexpr char AP_PREFIX[] = "wifi-clock-setup-";
 constexpr char DEFAULT_NTP_HOST[] = "pool.ntp.org";
 constexpr char DEFAULT_TIMEZONE[] = "GMT0BST,M3.5.0/1,M10.5.0/2";
 constexpr size_t EEPROM_BYTES = 512;
@@ -88,8 +88,8 @@ static_assert(sizeof(StoredConfig) <= EEPROM_BYTES, "Settings exceed EEPROM allo
 bool saveConfig(const ClockConfig &candidate);
 void scheduleRestart();
 
-enum class NetworkState { Portal, Connecting, Connected, WaitingForNtp };
-NetworkState networkState = NetworkState::Portal;
+enum class NetworkState { Offline, Portal, Connecting, Connected, WaitingForNtp };
+NetworkState networkState = NetworkState::Offline;
 bool portalActive = false;
 bool mdnsActive = false;
 bool configurationUsable = false;
@@ -114,7 +114,6 @@ bool sdkCredentialsCleared = false;
 bool cleanResetArmed = false;
 uint32_t cleanResetArmedAt = 0;
 uint32_t restartScheduledAt = 0;
-uint32_t portalStartedAt = 0;
 uint32_t connectStartedAt = 0;
 uint32_t ntpStartedAt = 0;
 uint32_t lastSyncAt = 0;
@@ -327,8 +326,47 @@ void startPortal() {
   WiFi.softAP(apName.c_str());
   captiveDns.start(53, "*", WiFi.softAPIP());
   portalActive = true;
-  portalStartedAt = millis();
   networkState = NetworkState::Portal;
+}
+
+void startMdns() {
+  if (mdnsActive || WiFi.status() != WL_CONNECTED) return;
+  const String hostname = deviceHostname();
+  mdnsActive = MDNS.begin(hostname.c_str());
+  if (mdnsActive) MDNS.addService("http", "tcp", 80);
+}
+
+void discardWifiScan() {
+  scanRequested = false;
+  scanReady = false;
+  scanFailed = false;
+  scanResultJson = String();
+  // scanDelete() frees results, but does not cancel an SDK scan in progress.
+  // Keep tracking that scan until completion, then discard its late results.
+  // Never wait here: MM32 UART handling must remain responsive while offline.
+  if (scanRunning && WiFi.scanComplete() == WIFI_SCAN_RUNNING) return;
+  scanRunning = false;
+  WiFi.scanDelete();
+}
+
+void endNetworkWake() {
+  // A configured clock must not fall back to a discoverable AP during its
+  // daily wake.  The next MM32 reset is a fresh, single station attempt.
+  networkState = NetworkState::Offline;
+  webSession.stop();
+  discardWifiScan();
+  ntpRequested = false;
+  ntpResponseReceived = false;
+  timeAnnouncementActive = false;
+  firstTimeAnnouncementPending = false;
+  if (portalActive) {
+    captiveDns.stop();
+    WiFi.softAPdisconnect(false);
+    portalActive = false;
+  }
+  mdnsActive = false;
+  WiFi.disconnect(false);
+  WiFi.mode(WIFI_OFF);
 }
 
 void beginStationConnection() {
@@ -336,7 +374,7 @@ void beginStationConnection() {
     if (!portalActive) startPortal();
     return;
   }
-  WiFi.mode(portalActive ? WIFI_AP_STA : WIFI_STA);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(config.ssid.c_str(), config.password.c_str());
   connectStartedAt = millis();
   networkState = NetworkState::Connecting;
@@ -350,6 +388,10 @@ void sendTimeToClock(const tm &localTime) {
 }
 
 void serviceWebSession() {
+  if (networkState == NetworkState::Offline) {
+    webSession.stop();
+    return;
+  }
   if (webSession.takeTick(millis())) Serial.print("+TICK\r\n");
 }
 
@@ -426,33 +468,20 @@ void serviceNtp() {
 }
 
 void serviceNetwork() {
-  // A DHCP lease may arrive after our initial connection timeout.
-  if (networkState == NetworkState::Portal && configurationUsable &&
-      WiFi.status() == WL_CONNECTED) beginNtpSync();
   if (networkState == NetworkState::Connecting) {
-    if (WiFi.status() == WL_CONNECTED) beginNtpSync();
-    else if (millis() - connectStartedAt > WIFI_CONNECT_TIMEOUT_MS) {
-      startPortal();
+    if (WiFi.status() == WL_CONNECTED) {
+      startMdns();
+      beginNtpSync();
+    } else if (millis() - connectStartedAt >= WIFI_CONNECT_TIMEOUT_MS) {
+      endNetworkWake();
     }
   }
   if ((networkState == NetworkState::Connected ||
        networkState == NetworkState::WaitingForNtp) && WiFi.status() != WL_CONNECTED) {
-    ntpRequested = false;
-    ntpResponseReceived = false;
-    timeAnnouncementActive = false;
-    startPortal();
-    beginStationConnection();
+    endNetworkWake();
   }
   if (networkState == NetworkState::Connected &&
       millis() - lastSyncAt > DAILY_SYNC_MS) beginNtpSync();
-
-  if (!KEEP_AWAKE && portalActive && WiFi.status() == WL_CONNECTED &&
-      millis() - portalStartedAt > PORTAL_TIMEOUT_MS) {
-    captiveDns.stop();
-    WiFi.softAPdisconnect(false);
-    portalActive = false;
-    WiFi.mode(WIFI_STA);
-  }
 }
 
 void handleUartLine(const char *line) {
@@ -536,6 +565,11 @@ void serveIndex() {
 
 void keepWebSessionAlive() {
   if (!apiRequestAllowed(true, false)) return;
+  // A request already buffered before disconnection must not revive a session.
+  if (networkState == NetworkState::Offline) {
+    web.send(503, "application/json", "{\"error\":\"Wi-Fi is off for this wake\"}");
+    return;
+  }
   const String page = web.arg("page");
   if (!ClockWebSession::validId(page.c_str())) {
     web.send(400, "application/json", "{\"error\":\"Invalid page session\"}");
@@ -672,6 +706,10 @@ void updateConfig() {
 }
 
 void serviceWifiScan() {
+  if (networkState == NetworkState::Offline) {
+    discardWifiScan();
+    return;
+  }
   if (scanRunning) {
     const int found = WiFi.scanComplete();
     if (found == WIFI_SCAN_RUNNING) return;
@@ -709,6 +747,10 @@ void serviceWifiScan() {
 
 void scanNetworks() {
   if (!apiRequestAllowed(true, false)) return;
+  if (networkState == NetworkState::Offline) {
+    web.send(503, "application/json", "{\"error\":\"Wi-Fi is off for this wake\"}");
+    return;
+  }
   if (web.arg("start") == "1" && !scanRunning) scanRequested = true;
   if (scanRequested || scanRunning) {
     web.send(202, "application/json", "{\"scanning\":true}");
@@ -761,16 +803,18 @@ void setup() {
   configurationUsable = loadConfig();
   const String hostname = deviceHostname();
   WiFi.hostname(hostname.c_str());
-  // Always retain a local recovery/configuration AP at boot.  This avoids an
-  // accidental match against data left by the factory firmware preventing a
-  // newly flashed unit from being discoverable.
-  startPortal();
-  mdnsActive = MDNS.begin(hostname.c_str());
-  if (mdnsActive) MDNS.addService("http", "tcp", 80);
   createRequestToken();
   setupWebServer();
-  if (configurationUsable) beginStationConnection();
-  else WiFi.disconnect(false, true);  // Clear RAM-only SDK credentials after a blank/invalid config.
+  if (configurationUsable) {
+    // Normal and scheduled wakes are station-only.  This limits radio time and
+    // prevents a configuration AP appearing whenever the clock updates.
+    beginStationConnection();
+  } else {
+    // A blank (first-flashed or factory-reset) unit needs a local setup page.
+    // Clear only RAM-held SDK credentials before bringing up its AP.
+    WiFi.disconnect(false, true);
+    startPortal();
+  }
 }
 
 void loop() {

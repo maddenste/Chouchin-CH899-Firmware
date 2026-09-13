@@ -6,7 +6,8 @@ It is a single application image: the setup page is compiled into flash from
 
 ## Arduino IDE settings
 
-The v1.0.0 release was built with **ESP8266 by ESP8266 Community 3.1.2**.
+The v1.0.0 release and prepared v1.0.1 build use **ESP8266 by ESP8266
+Community 3.1.2**.
 Install that version in Boards Manager to reproduce the build environment,
 then use:
 
@@ -60,8 +61,25 @@ reviewed source was compiled and validated. They are available from the
 Documentation or source changes do not rebuild those binaries; a modified build
 needs a fresh export, checksum and hardware test before distribution.
 
+The source identifies itself as `v1.0.1`. Final compatible-movement testing
+completed on 12 September 2026; the prepared application image becomes public
+only when the GitHub Release is created.
+
 ## Current behaviour
 
+- With blank settings (a first flash or Factory reset), the clock starts the
+  open setup AP `wifi-clock-setup-<chip-id>`. Once valid Wi-Fi settings are
+  saved, all normal and scheduled wakes use station Wi-Fi only: the AP and
+  captive DNS are not started.
+- A saved network has ten seconds to associate and obtain a connection. If it
+  fails, Wi-Fi is switched off for that wake without a retry or fallback AP.
+  The next MM32 wake starts one fresh station attempt. Factory reset is the
+  intentional recovery route after a router, SSID, or password change.
+- A queued scan is cancelled when Wi-Fi is switched off. Late scan results and
+  buffered page keepalives are discarded, so they cannot restart station Wi-Fi
+  or extend `+TICK` after that wake has ended.
+- The DHCP hostname is `wifi-clock-<chip-id>` and mDNS begins only after the
+  station has connected, at `http://wifi-clock-<chip-id>.local/`.
 - MM32 UART: accepts `USER` and returns `USER_OK` at 115200 baud. M.SET+REC
   produces repeated `CLEAN` commands. Like stock, the first arms the operation
   and a second command at the observed cadence confirms it; after a successful

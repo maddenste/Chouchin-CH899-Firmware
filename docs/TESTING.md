@@ -2,9 +2,14 @@
 
 **v1.0.0 release, 11 September 2026:** the reviewed source was compiled,
 flashed and validated on the owner's compatible CH-899 / CHOUCHIN movement.
-The matching application export and clean 1 MiB recovery image, with their
-SHA-256 values, are published on the
+The matching application export and its SHA-256 value are published on the
 [v1.0.0 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
+
+**v1.0.1 acceptance, 12 September 2026:** final compatible-movement testing
+completed successfully. This version adds the station-only wake policy and the
+offline scan/page-session shutdown safeguards. Its application image, manual
+and checksum manifest are published on the
+[v1.0.1 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1).
 
 | Test | Status | Notes |
 | --- | --- | --- |
@@ -21,6 +26,8 @@ SHA-256 values, are published on the
 | Stock custom/non-`:00` schedule | Not supported by observed MM32 behaviour | Stock ESP stored and transmitted custom values, but the movement did not reliably wake for them. |
 | M.SET + REC `CLEAN` behaviour | Confirmed on v1.0.0 | Repeated command confirms one clear/restart; blank-state retries acknowledge without another erase/restart. |
 | OTA update | Deliberately not supported | See findings document. |
+| Station-only wake and ten-second failed-association cutoff | Confirmed on v1.0.1 | AP with blank or invalid settings; valid saved settings do not start AP or captive DNS during normal wakes. |
+| Offline scan and page-heartbeat shutdown | Confirmed on v1.0.1 | Queued scans cannot restart Wi-Fi; late scan results are discarded; page keepalives stop and buffered scan/keepalive requests are rejected. |
 
 ## Review checks completed
 
@@ -48,6 +55,17 @@ the ESP or future government policy changes.
 The installed ESP8266 Arduino core 3.1.2 source was inspected to confirm NTP
 hostname ownership, scan behaviour and flash-map semantics. This complements,
 but does not replace, the completed v1.0.0 hardware validation.
+
+### v1.0.1 review and hardware acceptance, 12 September 2026
+
+The offline-state fixes were checked with a temporary, external harness using
+mechanically translated sketch functions and simulated Wi-Fi/time/UART APIs.
+All 46 scenarios passed, including timeout boundaries, queued and late scans,
+offline request rejection, heartbeat shutdown, and continued USER/CLEAN
+handling. This is a software simulation, not an on-device test. The existing
+28 page checks and 40 timezone-preset checks also passed again. A fresh
+ESP8285 build with ESP8266 core 3.1.2 and all warnings enabled succeeded.
+Final compatible-movement testing subsequently completed successfully.
 
 ## Publication status
 

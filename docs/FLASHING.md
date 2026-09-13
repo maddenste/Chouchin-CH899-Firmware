@@ -17,12 +17,13 @@ The commands below use the v4 spelling (`flash_id`, `read_flash`, `no_reset`).
 Newer versions may use hyphens. Change `COM4` and the file paths to match your
 PC, and close Arduino Serial Monitor or any other program using that port.
 
-Download the v1.0.0 application image and `SHA256SUMS.txt` from the
-[GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.0).
-Verify the application's SHA-256 before flashing:
+Download the matching application image and `SHA256SUMS.txt` from the relevant
+[GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases).
+The filename below uses v1.0.1. Verify the application's SHA-256 before
+flashing:
 
 ```powershell
-certutil -hashfile 'C:\path\to\CH899-Clock-v1.0.0-esp8285-application.bin' SHA256
+certutil -hashfile 'C:\path\to\CH899-Clock-v1.0.1-esp8285-application.bin' SHA256
 ```
 
 It must match the value in the downloaded `SHA256SUMS.txt`.
@@ -128,21 +129,22 @@ compare the two hashes while remaining in the bootloader. Both files must be
 Use a verified binary exported from the matching source revision:
 
 ```powershell
-& 'E:\esptool.exe' --chip esp8266 --port COM4 --baud 57600 --before no_reset --after no_reset write_flash --flash_mode dout --flash_freq 40m --flash_size 1MB 0x0 'C:\path\to\CH899-Clock-v1.0.0-esp8285-application.bin'
+& 'E:\esptool.exe' --chip esp8266 --port COM4 --baud 57600 --before no_reset --after no_reset write_flash --flash_mode dout --flash_freq 40m --flash_size 1MB 0x0 'C:\path\to\CH899-Clock-v1.0.1-esp8285-application.bin'
 ```
 
-The released application's SHA-256 is
-`A8E3B018228CBB56E9D43F306BB7825C42C9BA665AC2651DAF8E725524FC4788`.
-Do not assume that editing the sketch updates a downloaded `.bin`; export,
-identify and test any changed image before distributing it.
+The application SHA-256 must match the selected release manifest. Do not assume
+that editing the sketch updates a downloaded `.bin`; export, identify and test
+any changed image before distributing it.
 
 After `Hash of data verified`, `Staying in bootloader` is expected because
 `--after no_reset` was requested. To run normally, power down the clock and
 disconnect the programmer's driven serial/power lines, release ESP IO0 and
 MM32 reset, then restore the clock's normal power. A fresh reset or power-up
 with IO0 released is required. The movement may need M.SET to start a new wake
-window. Look for `WiFi-Clock Setup-...`; its availability still depends on the
-MM32-controlled wake window.
+window. On a first flash or after Factory reset, look for
+`wifi-clock-setup-...`; its availability still depends on the MM32-controlled
+wake window. Once valid Wi-Fi settings are saved, normal wakes are
+station-only and do not broadcast that AP.
 
 ## Restore your original firmware
 
@@ -157,7 +159,7 @@ Wait for verification, then use the normal-power sequence above. This restores
 the ESP image and saved ESP settings from the backup; it does not restore or
 change anything stored separately by the MM32.
 
-## Make a clean full-flash image
+## Clean installation
 
 Only do this after retaining a personal original backup. `erase_flash` wipes
 the complete ESP, including saved Wi-Fi settings and any vendor recovery image:
@@ -166,16 +168,7 @@ the complete ESP, including saved Wi-Fi settings and any vendor recovery image:
 & 'E:\esptool.exe' --chip esp8266 --port COM4 --baud 57600 --before no_reset --after no_reset erase_flash
 ```
 
-Write the application using the earlier `write_flash` command. **Stay in the
-bootloader without configuring Wi-Fi or starting the application**, then save
-a complete factory image to a new file:
-
-```powershell
-& 'E:\esptool.exe' --chip esp8266 --port COM4 --baud 57600 --before no_reset --after no_reset read_flash 0x0 0x100000 'E:\my-ch899-factory-blank-1MB.bin'
-certutil -hashfile 'E:\my-ch899-factory-blank-1MB.bin' SHA256
-```
-
-The published `CH899-Clock-factory-blank-1MB-20260910.bin` is the clean full
-1 MiB image captured during v1.0.0 release preparation. It is for recovery or
-factory preparation, not a substitute for a personal backup of the original
-ESP flash. Its SHA-256 is in the release manifest.
+Then write the replacement application using the earlier `write_flash` command.
+The erase leaves settings and unused flash blank; writing the application at
+`0x0` creates the clean replacement state. On first normal boot it starts the
+setup AP. A separately distributed full-flash image is not required.

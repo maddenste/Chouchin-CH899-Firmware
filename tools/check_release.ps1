@@ -6,12 +6,16 @@ $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $files = @(& git -C $root -c core.quotepath=false ls-files --cached --others --exclude-standard | Sort-Object -Unique)
 if ($LASTEXITCODE -ne 0 -or $files.Count -eq 0) { throw 'No public Git file set available.' }
+$deleted = @(& git -C $root -c core.quotepath=false ls-files --deleted)
+if ($LASTEXITCODE -ne 0) { throw 'Could not enumerate deleted Git files.' }
+$files = @($files | Where-Object { $_ -notin $deleted })
 foreach ($relative in $files) {
     if ($relative -match '(^|/)(private|build|scratch|release-preparation|\.git)(/|$)' -or $relative -match '\.(bin|elf|map|pcap|zip)$') {
         throw "Private/generated file in public set: $relative"
     }
     $path = Join-Path $root $relative
-    $item = Get-Item -LiteralPath $path
+    # Windows can mark .gitattributes hidden; it remains a tracked public file.
+    $item = Get-Item -LiteralPath $path -Force
     if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) { throw "Link in public set: $relative" }
     if ($relative.EndsWith('.ps1')) {
         $tokens = $null; $parseErrors = $null
@@ -37,4 +41,4 @@ try {
 } finally { Pop-Location }
 Write-Host "PASS: $($files.Count) public files checked; PowerShell syntax and local Markdown file links checked."
 Write-Host 'This does not certify absence of secrets or validate image metadata.'
-Write-Host 'Before a future release, inspect the staged source set and draft release assets, including their SHA-256 values.'
+Write-Host 'Before a future release, inspect the staged source set and release assets, including their SHA-256 values.'
