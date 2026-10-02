@@ -1,3 +1,13 @@
+> [!IMPORTANT]
+> **Check your board revision before flashing.**
+>
+> This project is for the **older Chouchin-899 board with an MM32SPIN movement controller and ESP8285 Wi-Fi chip**.
+>
+> If your board has **HC32L130J8TA and TXW813-320**, use the
+> **[newer-board WiFi Clock v2.0 project](https://github.com/maddenste/Chouchin-899-latest-revision)** instead.
+>
+> **The firmware and flashing tools are not interchangeable.** Do not flash ESP firmware onto a TXW chip or use MM32 images/flash algorithms on an HC32. Check both chip markings—not just the clock's model name. The new project's [board photographs](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs) help identify the newer revision.
+
 # CH-899 Clock ESP8285 Firmware
 
 Copyright (C) 2026 Steve Madden.
