@@ -1,134 +1,42 @@
 # CH-899 · Wi-Fi-only upgrade
 
+**For the older MM32 revision of the Chouchin CH899 clock.** This version improves Wi-Fi setup and internet timekeeping while leaving the factory hand-movement firmware untouched.
+
 ![Chouchin-CH899 WiFi Clock v1.0 — ESP8285 Wi-Fi-only upgrade](docs/assets/wifi-clock-v1.0-banner.png)
 
-Improve Wi-Fi setup and internet timekeeping while keeping your clock's original hand movement. This project replaces only the Wi-Fi firmware; the software that controls the hands stays untouched.
+## Check your clock
 
-**Check your board:** this upgrade is for the **MM32 board** with an ESP-01F Wi-Fi module. CH899 clocks can look the same outside but have different electronics. [Compare your board with the identification photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) before installing.
+Look for the circuit board shown below. This project updates only its Wi-Fi module. [See the board close-ups →](docs/REVERSE_ENGINEERING.md#hardware-identified)
 
-**[Install the Wi-Fi-only upgrade →](docs/FLASHING.md)** · [Download v1.0.1](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1) · [Settings guide](docs/USER_GUIDE.md)
+<img src="docs/images/06-full-pcb-component-side.jpg" alt="The older MM32 clock board supported by the Wi-Fi-only upgrade" width="450">
 
-## Looking for movement styles or a different board?
+## What you gain
 
-- **[Add movement styles with WiFi Clock v1.5](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** — for this same MM32 board, with Sweep, Burst, the station-clock pause at 12 and seconds-hand parking. It replaces both firmware applications, including the factory movement firmware, which cannot be recovered from the chip after replacement. Read that project's installation guide before choosing it.
-- **[Have the HC32 board? Use WiFi Clock v2.0](https://github.com/maddenste/Chouchin-899-latest-revision)** — for clocks with different electronics. [Its board photos](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs) show how to recognise it. These ESP firmware files will not work on that board.
+- **Phone-friendly Wi-Fi setup** — choose a nearby network or enter a hidden network yourself.
+- **Timezone and summer/winter time settings** — with a choice of daily updates at 09:00, 10:00, 21:00 or 22:00.
+- **A choice of internet time server** — with a backup server used automatically if yours fails.
 
-The movement upgrades each need their own Wi-Fi firmware. Follow the guide for the project you choose; do not mix its files with this Wi-Fi-only release.
+Hand movement remains as supplied by the manufacturer. For movement styles and seconds-hand parking, see the v1.5 option below.
+
+## Install
+
+**[Download v1.0.1](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1)** · **[Follow the installation guide →](docs/FLASHING.md)**
+
+You will need to open the clock and connect a serial programmer. The guide covers the connections, keeping a personal backup and installing the prepared firmware; no compiling is needed.
+
+**After setup, the webpage is available only while the clock's Wi-Fi is awake.** If you change your home Wi-Fi details, use the [reset and reconnection instructions](docs/USER_GUIDE.md#first-time-setup-or-factory-reset-recovery). Use the page on a trusted local network.
+
+[Settings and everyday use](docs/USER_GUIDE.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v1.0.1.pdf) · [Help or report a bug](https://github.com/maddenste/Chouchin-CH899-Firmware/issues)
+
+## Want more control, or have a different board?
+
+- **[WiFi Clock v1.5 for this same MM32 board](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** — adds movement styles and seconds-hand parking. It also replaces the factory movement firmware, which cannot be recovered from the chip afterwards; read its installation warning first.
+- **[WiFi Clock v2.0 for the newer HC32 revision](https://github.com/maddenste/Chouchin-899-latest-revision)** — for different electronics. [Check its board photos](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs).
+
+Use the files and installation guide for the project you choose; the firmware is not interchangeable.
+
+---
 
 Unofficial project by Steve Madden · 2026. Not affiliated with the clock manufacturer.
 
-## Licence and third-party components
-
-The original project source is licensed under
-[GPL-3.0-or-later](LICENSE). This permits commercial use, modification and
-redistribution provided the corresponding source and GPL terms are supplied.
-Released firmware also contains components from the ESP8266 Arduino Core 3.1.2,
-which retain their own terms. See [Third-party notices](THIRD_PARTY_NOTICES.md).
-The current public release is documented in the [changelog](CHANGELOG.md).
-
-> **v1.0.1 released 13 September 2026.** The source was compiled, flashed and
-> validated on the owner's compatible movement. Download the application image,
-> user manual and checksum manifest from the
-> [v1.0.1 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1).
-> See [Testing status](docs/TESTING.md) and the
-> [review record](docs/REVIEW-2026-09-10.md).
-
-![Opened CH-899 movement](docs/images/01-open-movement-and-coils.jpg)
-
-## What this project changes
-
-The clock has two controllers:
-
-- An **MM32SPIN** controller runs the movement, buttons, clock logic and the
-  ESP wake/reset behaviour.
-- An **ESP8285N08** in an ESP-01F module handles Wi-Fi and NTP.
-
-This project replaces only the ESP firmware. It does not alter or attempt to
-replace the MM32 movement firmware.
-
-The replacement provides:
-
-- 2.4 GHz Wi-Fi setup page with nearby-network scan and hidden-SSID support.
-- Configurable NTP host, 40 verified timezone presets with automatic/disabled
-  daylight saving and a custom POSIX option, plus the MM32's four confirmed
-  daily update times: `09:00`, `10:00`, `21:00`, or `22:00`.
-- Automatic fallback to `pool.ntp.org` when a custom NTP host fails.
-- A setup AP named `wifi-clock-setup-<chip-id>` for first-time provisioning
-  and Factory-reset recovery only.
-- A unique DHCP hostname and local mDNS address of the form
-  `wifi-clock-<chip-id>` and `http://wifi-clock-<chip-id>.local/` after the
-  ESP has joined the saved network.
-- A visible firmware version and matching `/api/v1/status` response field for
-  reliable identification during support and future development.
-- A Factory reset button that clears this firmware's stored configuration.
-- MM32-compatible `USER` / `USER_OK`, `CLEAN` / `CLEAN_OK`, `+TICK`, and
-  `+TIME` behaviour based on direction-labelled captures.
-
-## Important limitations
-
-- The MM32, not the ESP, decides when the ESP wakes and when it is reset/slept.
-  Consequently the setup page is normally available only during a wake window.
-- There is deliberately **no OTA update feature**. The ESP can be reset by the
-  MM32 before an update finishes; an interrupted-update recovery procedure has
-  not been validated. Details
-  are in [Reverse-engineering findings](docs/REVERSE_ENGINEERING.md#why-this-build-has-no-ota).
-- This is for owners of compatible CH-899 movements. Flashing incorrect
-  firmware, applying 5 V to 3.3 V logic, or interrupting a write can stop the
-  Wi-Fi portion working. Keep a personal full-flash backup before changing a
-  clock.
-- With valid saved settings, a normal or scheduled wake uses station Wi-Fi
-  only. It gives the saved network ten seconds to connect, then stops Wi-Fi
-  for that wake if it cannot connect; it does not expose a fallback AP. Use
-  Factory reset to return the clock to setup-AP mode after a Wi-Fi change.
-- The setup AP and HTTP settings/reset API have no authentication. Anyone able
-  to reach the AP while it is in setup mode, or the clock's LAN address while
-  it is awake, can change settings. Use only on a trusted local network; never
-  expose it through port forwarding or treat it as access-controlled.
-- Preset rules were checked against IANA tzdata 2026.3 through 2035, but
-  governments can change civil-time policy after release. Custom POSIX rules
-  are checked for supported syntax, not geographical correctness.
-  See [Security and access limits](docs/SECURITY.md) for the API protections.
-
-## Start here
-
-1. Read the [reverse-engineering journey](docs/JOURNEY.md) for the full,
-   chronological investigation, or use [Hardware and findings](docs/REVERSE_ENGINEERING.md)
-   as the concise reference.
-2. Follow [Flashing a clock](docs/FLASHING.md) exactly.
-3. Read the [setup-page guide](docs/USER_GUIDE.md), or the
-   [Arduino guide](arduino/CH899_Clock/README.md) to edit or build the source.
-4. See [Testing status](docs/TESTING.md) for the initial validation record and
-   the v1.0.1 hardware-acceptance results.
-5. Read the [10 September review](docs/REVIEW-2026-09-10.md) for source fixes
-   and their evidence.
-
-## Repository layout
-
-- `arduino/CH899_Clock/` — editable Arduino source and embedded setup page.
-- `docs/` — journey, flashing guide, findings, testing record and labelled
-  photographs.
-- `tools/` — PowerShell research helpers and dependency-free page tests.
-- `private/` — excluded from Git; contains personal UART captures, original
-  vendor firmware and historical experiments.
-
-## Downloads and verification
-
-Download only from the
-[v1.0.1 GitHub Release](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1).
-It contains the application image, user manual and `SHA256SUMS.txt`. Verify the
-downloaded files against that manifest before flashing. A clean installation
-uses `erase_flash` followed by the application image; no prebuilt full-flash
-image is required.
-
-No original vendor ESP firmware, raw UART captures, or extracted stock web
-assets are included in the public project.
-
-## v1.0.1 changes
-
-Version 1.0.1 uses a station-only policy once Wi-Fi settings have been saved:
-the AP is not broadcast on normal daily wakes, and a failed association ends
-the Wi-Fi session after ten seconds. Queued scans and page keepalives are
-cancelled when Wi-Fi ends, so they cannot restart the radio for that wake.
-
-The application image, user manual and matching checksum manifest are published
-with the v1.0.1 GitHub Release.
+[How we investigated the clock](docs/JOURNEY.md) · [Source and building](arduino/CH899_Clock/README.md) · [Testing](docs/TESTING.md) · [Changelog](CHANGELOG.md) · [GPL-3.0-or-later](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
