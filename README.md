@@ -1,40 +1,42 @@
-# CH-899 · Wi-Fi-only upgrade
+# CH899 · MM32 Wi-Fi-only upgrade · v1.0
 
-**For the older MM32 revision of the Chouchin CH899 clock.** This version improves Wi-Fi setup and internet timekeeping while leaving the factory hand-movement firmware untouched.
+**For the older clock board with “MM32” printed on its main chip.** Choose this project to improve Wi-Fi setup and internet timekeeping while keeping the original hand movement. Only the Wi-Fi software is replaced.
 
 ## Other clock projects
 
-| Repository | Who it is for |
+| Other repository | Choose it if… |
 | --- | --- |
-| [**MM32 clock upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | Older MM32 clocks — adds movement styles and seconds-hand parking |
-| [**HC32 clock upgrade**](https://github.com/maddenste/Chouchin-899-latest-revision) | Newer HC32 clocks — adds movement styles and seconds-hand parking |
+| [**MM32 — clock upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | You have the same MM32 board and want movement styles and seconds-hand parking |
+| [**HC32 — clock upgrade**](https://github.com/maddenste/Chouchin-899-latest-revision) | Your clock's main chip says HC32 |
 
-![Chouchin-CH899 WiFi Clock v1.0 — ESP8285 Wi-Fi-only upgrade](docs/assets/wifi-clock-v1.0-banner.png)
+## Check your board
 
-## Check your clock
+Open the clock's movement cover and look for **MM32** on the large square chip, as shown below. [More board photos and identification help →](docs/REVERSE_ENGINEERING.md#hardware-identified)
 
-Look for the circuit board shown below. This project updates only its Wi-Fi module. [See the board close-ups →](docs/REVERSE_ENGINEERING.md#hardware-identified)
+<a href="docs/images/05-mm32spin-controller-and-crystal.jpg"><img src="docs/images/05-mm32spin-controller-and-crystal.jpg" alt="Older clock board: MM32 is printed on the large square chip" height="260"></a>
 
-<img src="docs/images/06-full-pcb-component-side.jpg" alt="The older MM32 clock board supported by the Wi-Fi-only upgrade" width="450">
+Click the photo to enlarge it. If your board differs, check the identification guide before installing.
 
-## What you gain
+## What this upgrade adds
 
-- **Phone-friendly Wi-Fi setup** — choose a nearby network or enter a hidden network yourself.
-- **Timezone and summer/winter time settings** — with a choice of daily updates at 09:00, 10:00, 21:00 or 22:00.
-- **A choice of internet time server** — with a backup server used automatically if yours fails.
+- **Phone-friendly Wi-Fi setup:** choose your network from a list.
+- **Timezone and summer/winter time settings.**
+- **Daily internet time checks:** choose 09:00, 10:00, 21:00 or 22:00.
 
 ## Install
 
-**[Download v1.0.1](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1)** · **[Follow the installation guide →](docs/FLASHING.md)**
+**[Start installation →](docs/FLASHING.md)**
 
-You will need to open the clock and connect a serial programmer. The guide covers the connections, keeping a personal backup and installing the prepared firmware; no compiling is needed.
+Follow the guide in order. It covers the equipment, download, backing up your existing Wi-Fi software and programming the clock. No compiling is required.
 
-The clock switches Wi-Fi off after updating to save battery power. **To change settings later, press M.SET, then [open its settings page](docs/USER_GUIDE.md#open-the-settings-page-again).**
+**Already installed?** [Change settings](docs/USER_GUIDE.md) · [Reopen the settings page](docs/USER_GUIDE.md#open-the-settings-page-again) · [Get help or report a bug](https://github.com/maddenste/Chouchin-CH899-Firmware/issues)
 
-[Settings and everyday use](docs/USER_GUIDE.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v1.0.1.pdf) · [Help or report a bug](https://github.com/maddenste/Chouchin-CH899-Firmware/issues)
+The clock switches Wi-Fi off after updating to save battery power. Press M.SET when you want to change settings again.
+
+<img src="docs/assets/wifi-clock-v1.0-banner.png" alt="Chouchin-CH899 WiFi Clock v1.0 — Wi-Fi-only upgrade" width="600">
 
 ---
 
 Unofficial project by Steve Madden · 2026. Not affiliated with the clock manufacturer.
 
-[How we investigated the clock](docs/JOURNEY.md) · [Source and building](arduino/CH899_Clock/README.md) · [Testing](docs/TESTING.md) · [Changelog](CHANGELOG.md) · [GPL-3.0-or-later](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
+[Downloads and release notes](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1) · [Printable manual](docs/WiFi-Clock-User-Manual-v1.0.1.pdf) · [Project journey](docs/JOURNEY.md) · [Source and building](arduino/CH899_Clock/README.md) · [GPL-3.0-or-later](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
