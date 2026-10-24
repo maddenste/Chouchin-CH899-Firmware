@@ -1,5 +1,7 @@
 # CH-899 · Wi-Fi-only upgrade
 
+![Chouchin-CH899 WiFi Clock v1.0 — ESP8285 Wi-Fi-only upgrade](docs/assets/wifi-clock-v1.0-banner.png)
+
 Improve Wi-Fi setup and internet timekeeping while keeping your clock's original hand movement. This project replaces only the Wi-Fi firmware; the software that controls the hands stays untouched.
 
 **Check your board:** this upgrade is for the **MM32 board** with an ESP-01F Wi-Fi module. CH899 clocks can look the same outside but have different electronics. [Compare your board with the identification photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) before installing.
