@@ -22,7 +22,7 @@ endorsed by, or supported by the movement manufacturer.
 
 This project deliberately keeps the **original MM32 movement firmware** and replaces only its ESP8285 Wi-Fi application.
 
-- For control of the movement itself, see **[WiFi Clock v1.5 for MM32 + ESP8285](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)**. It replaces both controllers' applications and adds selectable hand movement and seconds-hand battery saving. It is currently pre-release; follow its matched-pair installation guide rather than mixing its ESP image with this project's.
+- For control of the movement itself, see **[WiFi Clock v1.5 for MM32 + ESP8285](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)**. It replaces both controllers' applications and adds selectable hand movement and seconds-hand battery saving. [WiFi Clock v1.5 downloads are available](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/releases/tag/v1.5); follow its matched-pair installation guide rather than mixing its ESP image with this project's.
 - If your board has **HC32L130J8TA + TXW813-320**, use **[the newer-board WiFi Clock v2.0 project](https://github.com/maddenste/Chouchin-899-latest-revision)** instead. That is different hardware, not an ESP8285 upgrade.
 
 ## Licence and third-party components
