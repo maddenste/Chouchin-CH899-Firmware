@@ -1,5 +1,7 @@
 # CH899 · MM32 Wi-Fi-only upgrade · v1.0
 
+<img src="docs/assets/wifi-clock-v1.0-banner.png" alt="Chouchin-CH899 WiFi Clock v1.0 — Wi-Fi-only upgrade" width="600">
+
 **For the older clock board with “MM32” printed on its main chip.** Choose this project to improve Wi-Fi setup and internet timekeeping while keeping the original hand movement. Only the Wi-Fi software is replaced.
 
 ## Other clock projects
@@ -32,8 +34,6 @@ Follow the guide in order. It covers the equipment, download, backing up your ex
 **Already installed?** [Change settings](docs/USER_GUIDE.md) · [Reopen the settings page](docs/USER_GUIDE.md#open-the-settings-page-again) · [Get help or report a bug](https://github.com/maddenste/Chouchin-CH899-Firmware/issues)
 
 The clock switches Wi-Fi off after updating to save battery power. Press M.SET when you want to change settings again.
-
-<img src="docs/assets/wifi-clock-v1.0-banner.png" alt="Chouchin-CH899 WiFi Clock v1.0 — Wi-Fi-only upgrade" width="600">
 
 ---
 
