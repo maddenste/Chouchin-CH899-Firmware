@@ -2,11 +2,10 @@
 
 **For the older MM32 revision of the Chouchin CH899 clock.** This version improves Wi-Fi setup and internet timekeeping while leaving the factory hand-movement firmware untouched.
 
-## Clock projects
+## Other clock projects
 
 | Repository | Who it is for |
 | --- | --- |
-| [**Wi-Fi-only upgrade**](https://github.com/maddenste/Chouchin-CH899-Firmware) | Older MM32 clocks — better Wi-Fi setup, keeping the original hand movement |
 | [**MM32 clock upgrade**](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285) | Older MM32 clocks — adds movement styles and seconds-hand parking |
 | [**HC32 clock upgrade**](https://github.com/maddenste/Chouchin-899-latest-revision) | Newer HC32 clocks — adds movement styles and seconds-hand parking |
 
