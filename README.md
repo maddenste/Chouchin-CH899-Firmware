@@ -24,7 +24,7 @@ Hand movement remains as supplied by the manufacturer. For movement styles and s
 
 You will need to open the clock and connect a serial programmer. The guide covers the connections, keeping a personal backup and installing the prepared firmware; no compiling is needed.
 
-**After setup, the webpage is available only while the clock's Wi-Fi is awake.** If you change your home Wi-Fi details, use the [reset and reconnection instructions](docs/USER_GUIDE.md#first-time-setup-or-factory-reset-recovery). Use the page on a trusted local network.
+The clock switches Wi-Fi off after updating to save battery power. **To change settings later, press M.SET, then [open its settings page](docs/USER_GUIDE.md#open-the-settings-page-again).**
 
 [Settings and everyday use](docs/USER_GUIDE.md) · [Printable manual](docs/WiFi-Clock-User-Manual-v1.0.1.pdf) · [Help or report a bug](https://github.com/maddenste/Chouchin-CH899-Firmware/issues)
 

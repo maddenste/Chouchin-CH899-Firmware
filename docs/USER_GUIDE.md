@@ -1,5 +1,15 @@
 # Clock setup
 
+## Open the settings page again
+
+The clock normally keeps Wi-Fi switched off to save battery power. You do not need to leave the settings page open for the clock to keep time.
+
+1. **Press M.SET** on the clock to reconnect it to your home Wi-Fi.
+2. Connect your phone or computer to that same home Wi-Fi network.
+3. Open the clock's web address saved from your first setup. If you did not save it, find the clock in your router's connected-device list and open its IP address in your browser.
+
+If the page has closed before you finish, press M.SET again and reopen it. For first-time setup, or if you have changed your home Wi-Fi name or password, follow the section below.
+
 ## First-time setup or Factory-reset recovery
 
 With blank or invalid saved settings, wake the clock and connect your phone to
