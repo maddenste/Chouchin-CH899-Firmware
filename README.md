@@ -1,29 +1,19 @@
-> [!IMPORTANT]
-> **Check your board revision before flashing.**
->
-> This project is for the **older Chouchin-899 board with an MM32SPIN movement controller and ESP8285 Wi-Fi chip**.
->
-> If your board has **HC32L130J8TA and TXW813-320**, use the
-> **[newer-board WiFi Clock v2.0 project](https://github.com/maddenste/Chouchin-899-latest-revision)** instead.
->
-> **The firmware and flashing tools are not interchangeable.** Do not flash ESP firmware onto a TXW chip or use MM32 images/flash algorithms on an HC32. Check both chip markings—not just the clock's model name. The new project's [board photographs](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs) help identify the newer revision.
+# CH-899 · Wi-Fi-only upgrade
 
-# CH-899 Clock ESP8285 Firmware
+Improve Wi-Fi setup and internet timekeeping while keeping your clock's original hand movement. This project replaces only the Wi-Fi firmware; the software that controls the hands stays untouched.
 
-Copyright (C) 2026 Steve Madden.
+**Check your board:** this upgrade is for the **MM32 board** with an ESP-01F Wi-Fi module. CH899 clocks can look the same outside but have different electronics. [Compare your board with the identification photos](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/blob/main/docs/HARDWARE.md) before installing.
 
-An independently developed ESP8285 replacement firmware for the CH-899 /
-CHOUCHIN Wi-Fi clock movement. It retains the observed MM32-to-ESP UART
-handshake, obtains time through NTP, and provides a small phone-friendly setup
-page. It is an unofficial compatibility project and is not affiliated with,
-endorsed by, or supported by the movement manufacturer.
+**[Install the Wi-Fi-only upgrade →](docs/FLASHING.md)** · [Download v1.0.1](https://github.com/maddenste/Chouchin-CH899-Firmware/releases/tag/v1.0.1) · [Settings guide](docs/USER_GUIDE.md)
 
-## Movement upgrades and other boards
+## Looking for movement styles or a different board?
 
-This project deliberately keeps the **original MM32 movement firmware** and replaces only its ESP8285 Wi-Fi application.
+- **[Add movement styles with WiFi Clock v1.5](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)** — for this same MM32 board, with Sweep, Burst, the station-clock pause at 12 and seconds-hand parking. It replaces both firmware applications, including the factory movement firmware, which cannot be recovered from the chip after replacement. Read that project's installation guide before choosing it.
+- **[Have the HC32 board? Use WiFi Clock v2.0](https://github.com/maddenste/Chouchin-899-latest-revision)** — for clocks with different electronics. [Its board photos](https://github.com/maddenste/Chouchin-899-latest-revision/blob/main/docs/HARDWARE.md#board-photographs) show how to recognise it. These ESP firmware files will not work on that board.
 
-- For control of the movement itself, see **[WiFi Clock v1.5 for MM32 + ESP8285](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285)**. It replaces both controllers' applications and adds selectable hand movement and seconds-hand battery saving. [WiFi Clock v1.5 downloads are available](https://github.com/maddenste/Chouchin-CH899-MM32-ESP8285/releases/tag/v1.5); follow its matched-pair installation guide rather than mixing its ESP image with this project's.
-- If your board has **HC32L130J8TA + TXW813-320**, use **[the newer-board WiFi Clock v2.0 project](https://github.com/maddenste/Chouchin-899-latest-revision)** instead. That is different hardware, not an ESP8285 upgrade.
+The movement upgrades each need their own Wi-Fi firmware. Follow the guide for the project you choose; do not mix its files with this Wi-Fi-only release.
+
+Unofficial project by Steve Madden · 2026. Not affiliated with the clock manufacturer.
 
 ## Licence and third-party components
 
